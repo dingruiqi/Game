@@ -3,9 +3,10 @@
 </nav>
 <div class="row m-0">
   <div class="col-3 bg-light p-1">
-    <button class="btn btn-outline-info btn-block">俄罗斯方块</button>
+    <button class="btn btn-outline-primary btn-block" routerLink="/tetris">俄罗斯方块</button>
   </div>
-  <div class="col-9">
-    <app-tetris></app-tetris>
+  <div class="col-9 p-0">
+    <!-- <app-tetris></app-tetris> -->
+    <router-outlet></router-outlet>
   </div>
 </div>

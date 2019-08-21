@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TetrisComponent } from './tetris/tetris.component';
+import { HomeComponent } from './home/home.component';
+//import { TetrisComponent } from './tetris/tetris.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TetrisComponent
+    HomeComponent,
+    //TetrisComponent
   ],
   imports: [
     BrowserModule,
