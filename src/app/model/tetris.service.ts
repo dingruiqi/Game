@@ -21,6 +21,22 @@ export class TetrisService {
     return size;
   }
 
+  get tetrisCurrentSpeed(): number {
+    return this.tetris.currentSpeed;
+  }
+
+  set tetrisCurrentSpeed(speed: number) {
+    this.tetris.currentSpeed = speed;
+  }
+
+  get tetrisCurrentScore(): number {
+    return this.tetris.currentScore;
+  }
+
+  get tetrisMaxScore(): number {
+    return this.tetris.maxScore;
+  }
+
   get tetrisRowCount(): number {
     return this.tetris.tetrisRowCount;
   }
@@ -29,7 +45,7 @@ export class TetrisService {
     return this.tetris.tetrisColCount;
   }
 
-  get tetrisCellWidth():number{
+  get tetrisCellWidth(): number {
     return this.tetris.tetrisCellWidth;
   }
 

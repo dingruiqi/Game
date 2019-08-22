@@ -57,4 +57,13 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     //throw new Error("Method not implemented.");
     this.initTetrisCanvas();
   }
+
+  stopGame(){
+    
+  }
+
+  startGame(){
+    console.log(this.tetrisService.tetrisCurrentSpeed);
+    
+  }
 }

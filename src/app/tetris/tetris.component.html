@@ -1,3 +1,36 @@
-<canvas class="container-fluid border border-primary bg-white p-0" id="tetrisCanvas">
+<form #tetrisForm="ngForm">
+    <div class="row">
+        <div class="col-9">
+            <canvas class="container-fluid border border-primary bg-white p-0" id="tetrisCanvas">
 
-</canvas>
+            </canvas>
+        </div>
+        <div class="col-3 p-0">
+            <div class="form-group">
+                <label for="maxScore" class="text-left text-primary">最高纪录:</label>
+                <label id="maxScore"
+                    class="form-control text-primary font-weight-bold">{{tetrisService.tetrisMaxScore}}</label>
+            </div>
+            <div class="form-group">
+                <label for="currentScore" class="text-left text-primary">当前分数:</label>
+                <label id="currentScore"
+                    class="form-control text-primary font-weight-bold">{{tetrisService.tetrisCurrentScore}}</label>
+            </div>
+            <div class="form-group">
+                <label for="currentSpeed" class="text-left text-primary">当前速度:</label>
+                <select id="currentSpeed" name="currentSpeed" class="form-control" #currentSpeed
+                    [(ngModel)]="tetrisService.tetrisCurrentSpeed">
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-success" type="submit" (click)="startGame()">启动</button>
+                <button class="btn btn-secondary" (click)="stopGame()">结束</button>
+            </div>
+        </div>
+    </div>
+</form>

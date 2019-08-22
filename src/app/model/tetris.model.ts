@@ -1,8 +1,8 @@
 
 //俄罗斯方块的行数
-const tetrisRow = 32;
+const tetrisRow = 24;
 //俄罗斯方块的列数
-const tetrisCol = 16;
+const tetrisCol = 24;
 
 //空颜色
 const color0 = "#FFFFFF";
@@ -68,6 +68,8 @@ export class Tetris {
     //当前俄罗斯方块已经下落固定的方块情况
     private tetrisFixedBlockStatus = [];
 
+    private currentFallBlock = [];
+
     constructor(currentSpeed?: number) {
         if (currentSpeed != null) {
             this.currentSpeed = currentSpeed;
@@ -80,6 +82,17 @@ export class Tetris {
                 this.tetrisFixedBlockStatus[row][col] = NoBlock;
             }
         }
+    }
+
+    //初始化的掉落方块信息
+    initFallTetris() {
+        let rand = parseInt((Math.random() * allTetrisShape.length).toString());
+        this.currentFallBlock = [
+            { x: allTetrisShape[rand][0].x, y: allTetrisShape[rand][0].y, color: allTetrisShape[rand][0].color },
+            { x: allTetrisShape[rand][1].x, y: allTetrisShape[rand][1].y, color: allTetrisShape[rand][1].color },
+            { x: allTetrisShape[rand][2].x, y: allTetrisShape[rand][2].y, color: allTetrisShape[rand][2].color },
+            { x: allTetrisShape[rand][3].x, y: allTetrisShape[rand][3].y, color: allTetrisShape[rand][3].color }
+        ];
     }
 
     get tetrisRowCount() {

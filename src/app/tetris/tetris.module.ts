@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TetrisComponent } from './tetris.component';
+import { FormsModule } from '@angular/forms';
 
 let routing = RouterModule.forChild([
   { path: "tetrisGame", component: TetrisComponent },
@@ -11,7 +12,7 @@ let routing = RouterModule.forChild([
 @NgModule({
   declarations: [TetrisComponent],
   imports: [
-    CommonModule, routing
+    CommonModule, routing, FormsModule
   ]
 })
 export class TetrisModule { }
