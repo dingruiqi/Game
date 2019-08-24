@@ -57,10 +57,29 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   }
 
+  private generateFallenTetris() {
+    let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
+
+    let fallenTetris = this.tetrisService.getInitFallenTetris();
+
+    let rowCount = this.tetrisService.tetrisRowCount;
+    let colCount = this.tetrisService.tetrisColCount;
+    let cellWidth = this.tetrisService.tetrisCellWidth;
+    //获取API
+    let tetrisCtx = tetrisContain.getContext("2d");
+
+    for (let index = 0; index < fallenTetris.length; index++) {
+      tetrisCtx.fillStyle = fallenTetris[index].color;
+      let x = fallenTetris[index].x * cellWidth;
+      let y = fallenTetris[index].y * cellWidth;
+      tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
+    }
+  }
+
   //后台线程，不停的检查当前的方块情况，如果
   private drawTetris() {
 
-    console.log("ssaaaaaaaaaaaaa");
+    //console.log("ssaaaaaaaaaaaaa");
 
     if (this.tetrisService.hasFallenTetris) {
       //有正在下落
@@ -68,6 +87,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     }
     else {
       this.drawFixTetris();
+
+      this.generateFallenTetris();
     }
   }
 

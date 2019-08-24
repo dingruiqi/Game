@@ -85,6 +85,16 @@ export class Tetris {
         }
     }
 
+    getFallTetris(): [{ x: number, y: number, color: string },
+        { x: number, y: number, color: string },
+        { x: number, y: number, color: string },
+        { x: number, y: number, color: string },] {
+        return <[{ x: number, y: number, color: string },
+            { x: number, y: number, color: string },
+            { x: number, y: number, color: string },
+            { x: number, y: number, color: string },]>this.currentFallBlock;
+    }
+
     //初始化的掉落方块信息
     initFallTetris() {
         let rand = parseInt((Math.random() * allTetrisShape.length).toString());
@@ -98,7 +108,7 @@ export class Tetris {
 
     //当前是否有下落的方块
     get hasFallenTetris(): boolean {
-        return this.currentFallBlock.length == 0;
+        return this.currentFallBlock.length != 0;
     }
 
     get tetrisRowCount() {

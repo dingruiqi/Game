@@ -21,6 +21,16 @@ export class TetrisService {
     return size;
   }
 
+  getInitFallenTetris(): [{ x: number, y: number, color: string },
+    { x: number, y: number, color: string },
+    { x: number, y: number, color: string },
+    { x: number, y: number, color: string },] {
+    
+      this.tetris.initFallTetris();
+
+    return this.tetris.getFallTetris();
+  }
+
   get hasFallenTetris(): boolean {
     return this.tetris.hasFallenTetris;
   }
