@@ -68,6 +68,7 @@ export class Tetris {
     //当前俄罗斯方块已经下落固定的方块情况
     private tetrisFixedBlockStatus = [];
 
+    //当前下落的方块，当下落方块触碰到底或是其他固定方块，则清空
     private currentFallBlock = [];
 
     constructor(currentSpeed?: number) {
@@ -93,6 +94,11 @@ export class Tetris {
             { x: allTetrisShape[rand][2].x, y: allTetrisShape[rand][2].y, color: allTetrisShape[rand][2].color },
             { x: allTetrisShape[rand][3].x, y: allTetrisShape[rand][3].y, color: allTetrisShape[rand][3].color }
         ];
+    }
+
+    //当前是否有下落的方块
+    get hasFallenTetris(): boolean {
+        return this.currentFallBlock.length == 0;
     }
 
     get tetrisRowCount() {

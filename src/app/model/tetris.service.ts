@@ -21,6 +21,10 @@ export class TetrisService {
     return size;
   }
 
+  get hasFallenTetris(): boolean {
+    return this.tetris.hasFallenTetris;
+  }
+
   get tetrisCurrentSpeed(): number {
     return this.tetris.currentSpeed;
   }

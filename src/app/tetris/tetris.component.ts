@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TetrisService } from '../model/tetris.service';
+import { __importDefault } from 'tslib';
 
 @Component({
   //selector: 'app-tetris',
@@ -9,6 +10,8 @@ import { TetrisService } from '../model/tetris.service';
 export class TetrisComponent implements OnInit, AfterViewInit {
 
   constructor(private tetrisService: TetrisService) { }
+
+  private tetrisDrawTimer = null;
 
   private initTetrisCanvas() {
     let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
@@ -44,6 +47,30 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     tetrisCtx.stroke();
   }
 
+  //绘制固定的俄罗斯方块，不包括正在下落的方块
+  private drawFixTetris() {
+
+  }
+
+  //绘制正在下落的俄罗斯方块
+  private drawFallenTetris() {
+
+  }
+
+  //后台线程，不停的检查当前的方块情况，如果
+  private drawTetris() {
+
+    console.log("ssaaaaaaaaaaaaa");
+
+    if (this.tetrisService.hasFallenTetris) {
+      //有正在下落
+      this.drawFallenTetris();
+    }
+    else {
+      this.drawFixTetris();
+    }
+  }
+
   ngOnInit() {
     // fromEvent(window, 'onload')
     //   .subscribe(res => {
@@ -58,12 +85,22 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     this.initTetrisCanvas();
   }
 
-  stopGame(){
-    
+  stopGame() {
+    console.log(`${new Date()}:结束游戏`);
+
+    if (this.tetrisDrawTimer != null) {
+      window.clearInterval(this.tetrisDrawTimer);
+    }
   }
 
-  startGame(){
-    console.log(this.tetrisService.tetrisCurrentSpeed);
-    
+  startGame() {
+    console.log(`${new Date()}:启动游戏，游戏参数：速度-${this.tetrisService.tetrisCurrentSpeed}`);
+    if (this.tetrisDrawTimer != null) {
+      window.clearInterval(this.tetrisDrawTimer);
+    }
+
+    this.tetrisDrawTimer = window.setInterval(() => {
+      this.drawTetris();
+    }, 1000);
   }
 }
