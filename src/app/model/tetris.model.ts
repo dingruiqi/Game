@@ -1,8 +1,8 @@
 
 //俄罗斯方块的行数
-const tetrisRow = 24;
+export const tetrisRow = 24;
 //俄罗斯方块的列数
-const tetrisCol = 24;
+export const tetrisCol = 24;
 
 //空颜色
 const color0 = "#FFFFFF";
@@ -15,7 +15,7 @@ const color6 = "#808040";
 const color7 = "#484891";
 
 //没有块的代码
-const NoBlock = 0;
+export const NoBlock = 0;
 //所有形状
 const allTetrisShape = [
     //z型
@@ -65,7 +65,7 @@ export class Tetris {
     public maxScore: number = 0;
 
     private cellWidth = 0;
-    //当前俄罗斯方块已经下落固定的方块情况
+    //当前俄罗斯方块已经下落固定的方块情况，包括所有的固定格子内的，不包括下落的
     private tetrisFixedBlockStatus = [];
 
     //当前下落的方块，当下落方块触碰到底或是其他固定方块，则清空
@@ -83,6 +83,14 @@ export class Tetris {
                 this.tetrisFixedBlockStatus[row][col] = NoBlock;
             }
         }
+    }
+
+    changeFallenTetrisToFixTetris() {
+        this.currentFallBlock.forEach(t => {
+            let block = (<{ x: number, y: number, color: string }>t);
+            this.tetrisFixedBlockStatus[block.y][block.x] = block.color;
+        })
+        this.currentFallBlock = [];
     }
 
     getFallTetris(): [{ x: number, y: number, color: string },
@@ -104,6 +112,24 @@ export class Tetris {
             { x: allTetrisShape[rand][2].x, y: allTetrisShape[rand][2].y, color: allTetrisShape[rand][2].color },
             { x: allTetrisShape[rand][3].x, y: allTetrisShape[rand][3].y, color: allTetrisShape[rand][3].color }
         ];
+    }
+
+    //获取所有固定的格子
+    getFixTetris(): [][] {
+
+        // let res: [{ x: number, y: number, color: string }];
+        // let index = 0;
+        // for (let row = 0; row < tetrisRow; row++) {
+        //     //this.tetrisFixedBlockStatus[row] = [];
+        //     for (let col = 0; col < tetrisCol; col++) {
+        //         if (this.tetrisFixedBlockStatus[row][col] != NoBlock) {
+        //             res[index++] = { x: row, y: col, color: this.tetrisFixedBlockStatus[row][col] };
+        //         }
+        //     }
+        // }
+
+        // return res;
+        return this.tetrisFixedBlockStatus;
     }
 
     //当前是否有下落的方块

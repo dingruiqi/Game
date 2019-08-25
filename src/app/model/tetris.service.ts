@@ -21,15 +21,32 @@ export class TetrisService {
     return size;
   }
 
-  getInitFallenTetris(): [{ x: number, y: number, color: string },
+  getFixTetris(): [][] {
+    return this.tetris.getFixTetris();
+  }
+
+  initFallenTetris(): [{ x: number, y: number, color: string },
     { x: number, y: number, color: string },
     { x: number, y: number, color: string },
     { x: number, y: number, color: string },] {
-    
-      this.tetris.initFallTetris();
+
+    this.tetris.initFallTetris();
 
     return this.tetris.getFallTetris();
   }
+
+  //固定所有下落方块
+  fixFallenTetris(){
+    this.tetris.changeFallenTetrisToFixTetris();
+  }
+
+  getFallenTetris():[{ x: number, y: number, color: string },
+    { x: number, y: number, color: string },
+    { x: number, y: number, color: string },
+    { x: number, y: number, color: string },] {
+
+      return this.tetris.getFallTetris();
+    }
 
   get hasFallenTetris(): boolean {
     return this.tetris.hasFallenTetris;
