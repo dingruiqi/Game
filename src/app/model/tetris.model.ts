@@ -118,7 +118,7 @@ export class Tetris {
         //顺时针变换
         let tmpFallBlock = this.currentFallBlock.concat();
 
-        this.changeFallenTetrisToFixTetris();
+        this.changeFallenTetrisDirection();
 
         let findBlock = this.currentFallBlock.find(t => {
             let block = <{ x: number, y: number, color: string }>t;
