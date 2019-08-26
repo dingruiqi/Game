@@ -96,11 +96,11 @@ export class Tetris {
     getFallTetris(): [{ x: number, y: number, color: string },
         { x: number, y: number, color: string },
         { x: number, y: number, color: string },
-        { x: number, y: number, color: string },] {
+        { x: number, y: number, color: string }] {
         return <[{ x: number, y: number, color: string },
             { x: number, y: number, color: string },
             { x: number, y: number, color: string },
-            { x: number, y: number, color: string },]>this.currentFallBlock;
+            { x: number, y: number, color: string }]>this.currentFallBlock;
     }
 
     //初始化的掉落方块信息
@@ -116,7 +116,28 @@ export class Tetris {
 
     canFallenTetrisChangeDirection(): boolean {
         //顺时针变换
-        this.currentFallBlock
+        let tmpFallBlock = this.currentFallBlock.concat();
+
+        this.changeFallenTetrisToFixTetris();
+
+        let findBlock = this.currentFallBlock.find(t => {
+            let fallBlock = <{ x: number, y: number, color: string }>t;
+            if (this.tetrisFixedBlockStatus[fallBlock.y][fallBlock.x] != NoBlock) {
+                return true;
+            }
+
+            return false;
+        });
+        if (findBlock != null) {
+            this.currentFallBlock = tmpFallBlock;
+
+            return false;
+        }
+        return true;
+    }
+
+    changeFallenTetrisDirection() {
+
     }
 
     //获取所有固定的格子

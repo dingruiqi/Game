@@ -306,6 +306,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     if (!this.tetrisService.canFallenTetrisChangeDirection()){
       return;
     }
+
+    this.tetrisService.changeFallenTetrisDirection();
   }
 
   private processKeyDown(keyCode: number) {

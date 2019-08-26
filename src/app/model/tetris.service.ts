@@ -40,6 +40,10 @@ export class TetrisService {
     return this.tetris.canFallenTetrisChangeDirection();
   }
 
+  changeFallenTetrisDirection() {
+    this.tetris.changeFallenTetrisDirection();
+  }
+
   //固定所有下落方块
   fixFallenTetris() {
     this.tetris.changeFallenTetrisToFixTetris();
