@@ -121,8 +121,8 @@ export class Tetris {
         this.changeFallenTetrisToFixTetris();
 
         let findBlock = this.currentFallBlock.find(t => {
-            let fallBlock = <{ x: number, y: number, color: string }>t;
-            if (this.tetrisFixedBlockStatus[fallBlock.y][fallBlock.x] != NoBlock) {
+            let block = <{ x: number, y: number, color: string }>t;
+            if (this.tetrisFixedBlockStatus[block.y][block.x] != NoBlock) {
                 return true;
             }
 

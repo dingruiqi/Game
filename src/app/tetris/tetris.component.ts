@@ -3,6 +3,7 @@ import { TetrisService } from '../model/tetris.service';
 import { __importDefault } from 'tslib';
 import { NoBlock, tetrisCol, tetrisRow } from '../model/tetris.model';
 import { fromEvent } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   //selector: 'app-tetris',
@@ -303,7 +304,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (!this.tetrisService.canFallenTetrisChangeDirection()){
+    if (!this.tetrisService.canFallenTetrisChangeDirection()) {
       return;
     }
 
@@ -356,6 +357,11 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   stopGame() {
     console.log(`${new Date()}:结束游戏`);
+
+    // let speed = document.getElementById('currentSpeed');
+    // speed.removeAttribute('disabled');
+    $('#currentSpeed').removeAttr('disabled');
+
     this.isPlaying = false;
     if (this.tetrisDrawTimer != null) {
       window.clearInterval(this.tetrisDrawTimer);
@@ -364,6 +370,10 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   startGame() {
     console.log(`${new Date()}:启动游戏，游戏参数：速度-${this.tetrisService.tetrisCurrentSpeed}`);
+
+    //let speed = document.getElementById('currentSpeed');
+    //speed.setAttribute('disabled','true');
+    $('#currentSpeed').attr('disabled', 'true');
 
     this.isPlaying = true;
 
