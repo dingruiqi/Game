@@ -114,6 +114,11 @@ export class Tetris {
         ];
     }
 
+    canFallenTetrisChangeDirection(): boolean {
+        //顺时针变换
+        this.currentFallBlock
+    }
+
     //获取所有固定的格子
     getFixTetris(): [][] {
 

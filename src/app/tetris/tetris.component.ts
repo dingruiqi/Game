@@ -96,20 +96,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   //绘制正在下落的俄罗斯方块
   private drawFallenTetris() {
-    // let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
-
-    // let fallenTetris = this.tetrisService.initFallenTetris();
-
-    // let cellWidth = this.tetrisService.tetrisCellWidth;
-    // //获取API
-    // let tetrisCtx = tetrisContain.getContext("2d");
-
-    // for (let index = 0; index < fallenTetris.length; index++) {
-    //   tetrisCtx.fillStyle = fallenTetris[index].color;
-    //   let x = fallenTetris[index].x * cellWidth;
-    //   let y = fallenTetris[index].y * cellWidth;
-    //   tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
-    // }
+    this.moveFallenTetrisDown();
   }
 
   private generateFallenTetris() {
@@ -177,10 +164,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     let allFixTetris = this.tetrisService.getFixTetris();
     //固定块的碰撞判断
     let find = fallenTetris.find(t => {
-      if (t.y == maxY) {
-        if (allFixTetris[t.y + 1][t.x] != NoBlock) {
-          return true;
-        }
+      if (allFixTetris[t.y + 1][t.x] != NoBlock) {
+        return true;
       }
 
       return false;
@@ -228,13 +213,16 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     let allFixTetris = this.tetrisService.getFixTetris();
     //固定块的碰撞判断
-    fallenTetris.forEach(t => {
-      if (t.x == maxX) {
-        if (allFixTetris[t.x + 1][t.y] != NoBlock) {
-          return;
-        }
+    let findBlock = fallenTetris.find(t => {
+      if (allFixTetris[t.y][t.x + 1] != NoBlock) {
+        return true;
       }
+
+      return false;
     })
+    if (findBlock != null) {
+      return;
+    }
 
     let cellWidth = this.tetrisService.tetrisCellWidth;
     let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
@@ -274,13 +262,17 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     let allFixTetris = this.tetrisService.getFixTetris();
     //固定块的碰撞判断
-    fallenTetris.forEach(t => {
-      if (t.x == minX) {
-        if (allFixTetris[t.x - 1][t.y] != NoBlock) {
-          return;
-        }
+    let findBlock = fallenTetris.find(t => {
+      if (allFixTetris[t.y][t.x - 1] != NoBlock) {
+        return true;
       }
+
+      return false;
     })
+
+    if (findBlock != null) {
+      return;
+    }
 
     let cellWidth = this.tetrisService.tetrisCellWidth;
     let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
@@ -305,6 +297,17 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     }
   }
 
+  private changeFallenTetrisDirection() {
+    //判断有没有下落的方块
+    if (!this.tetrisService.hasFallenTetris) {
+      return;
+    }
+
+    if (!this.tetrisService.canFallenTetrisChangeDirection()){
+      return;
+    }
+  }
+
   private processKeyDown(keyCode: number) {
     switch (keyCode) {
       case 37:
@@ -313,6 +316,14 @@ export class TetrisComponent implements OnInit, AfterViewInit {
           return;
         }
         this.moveFallenTetrisLeft();
+        break;
+      case 38:
+        //向上
+        if (!this.isPlaying) {
+          return;
+        }
+
+        this.changeFallenTetrisDirection();
         break;
       case 39:
         //向右

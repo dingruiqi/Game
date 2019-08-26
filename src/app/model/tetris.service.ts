@@ -35,18 +35,23 @@ export class TetrisService {
     return this.tetris.getFallTetris();
   }
 
+  //判断是否可以变形
+  canFallenTetrisChangeDirection(): boolean {
+    return this.tetris.canFallenTetrisChangeDirection();
+  }
+
   //固定所有下落方块
-  fixFallenTetris(){
+  fixFallenTetris() {
     this.tetris.changeFallenTetrisToFixTetris();
   }
 
-  getFallenTetris():[{ x: number, y: number, color: string },
+  getFallenTetris(): [{ x: number, y: number, color: string },
     { x: number, y: number, color: string },
     { x: number, y: number, color: string },
     { x: number, y: number, color: string },] {
 
-      return this.tetris.getFallTetris();
-    }
+    return this.tetris.getFallTetris();
+  }
 
   get hasFallenTetris(): boolean {
     return this.tetris.hasFallenTetris;
