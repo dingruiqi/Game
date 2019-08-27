@@ -33,13 +33,13 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     let cellWidth = this.tetrisService.tetrisCellWidth;
     //绘制横向网格对应的路径
     for (let index = 1; index < rowCount; index++) {
-      tetrisCtx.moveTo(0, index * cellWidth);
+      tetrisCtx.moveTo(0, Math.floor(index * cellWidth));
       //tetrisCtx.lineTo(colCount * cellWidth, index * cellWidth);
       tetrisCtx.lineTo(tetrisContain.width, Math.floor(index * cellWidth));
     }
     //绘制纵向网格对应的路径
     for (let index = 1; index < colCount; index++) {
-      tetrisCtx.moveTo(index * cellWidth, 0);
+      tetrisCtx.moveTo(Math.floor(index * cellWidth), 0);
       tetrisCtx.lineTo(Math.floor(index * cellWidth), tetrisContain.height);
     }
 
@@ -80,8 +80,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
           tetrisCtx.fillStyle = 'white';
 
         }
-        let x = col * cellWidth;
-        let y = row * cellWidth;
+        let x = Math.floor(col * cellWidth);
+        let y = Math.floor(row * cellWidth);
         tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
       }
     }
