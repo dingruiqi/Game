@@ -21,6 +21,10 @@ export class TetrisService {
     return size;
   }
 
+  removeFixTetrisRow(row?: number) {
+    return this.tetris.removeFixTetrisRow(row);
+  }
+
   getFixTetris(): [][] {
     return this.tetris.getFixTetris();
   }

@@ -65,7 +65,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     let tetrisCtx = tetrisContain.getContext("2d");
 
     //先处理消行
-    console.warn("尚未实现消行的功能！");
+    //console.warn("尚未实现消行的功能！");
+    this.tetrisService.removeFixTetrisRow();
 
     //所有格子变白
     for (let row = 0; row < rowCount; row++) {
@@ -308,7 +309,31 @@ export class TetrisComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    let fallenTetris = this.tetrisService.getFallenTetris();
+
+    let cellWidth = this.tetrisService.tetrisCellWidth;
+    let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
+    //获取API
+    let tetrisCtx = tetrisContain.getContext("2d");
+
+    //将原来位置的置白
+    for (let index = 0; index < fallenTetris.length; index++) {
+      let x = fallenTetris[index].x * cellWidth;
+      let y = fallenTetris[index].y * cellWidth;
+      tetrisCtx.fillStyle = 'white';
+      tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
+    }
+
     this.tetrisService.changeFallenTetrisDirection();
+
+    fallenTetris = this.tetrisService.getFallenTetris();
+
+    for (let index = 0; index < fallenTetris.length; index++) {
+      let x = fallenTetris[index].x * cellWidth;
+      let y = fallenTetris[index].y * cellWidth;
+      tetrisCtx.fillStyle = fallenTetris[index].color;
+      tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
+    }
   }
 
   private processKeyDown(keyCode: number) {

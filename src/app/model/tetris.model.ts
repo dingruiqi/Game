@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 
 //俄罗斯方块的行数
 export const tetrisRow = 24;
@@ -24,15 +25,15 @@ const allTetrisShape = [
     { x: tetrisCol / 2, y: 1, color: color1 },
     { x: tetrisCol / 2 + 1, y: 1, color: color1 }],
     //反z型
-    [{ x: tetrisCol / 2 + 1, y: 0, color: color2 },
-    { x: tetrisCol / 2, y: 0, color: color2 },
+    [{ x: tetrisCol / 2 - 1, y: 1, color: color2 },
     { x: tetrisCol / 2, y: 1, color: color2 },
-    { x: tetrisCol / 2 - 1, y: 1, color: color2 }],
+    { x: tetrisCol / 2, y: 0, color: color2 },
+    { x: tetrisCol / 2 + 1, y: 0, color: color2 }],
     //f型
-    [{ x: tetrisCol / 2 + 1, y: 0, color: color3 },
-    { x: tetrisCol / 2, y: 0, color: color3 },
+    [{ x: tetrisCol / 2, y: 0, color: color3 },
     { x: tetrisCol / 2, y: 1, color: color3 },
-    { x: tetrisCol / 2, y: 2, color: color3 }],
+    { x: tetrisCol / 2, y: 2, color: color3 },
+    { x: tetrisCol / 2 + 1, y: 0, color: color3 }],
     //反f型
     [{ x: tetrisCol / 2 - 1, y: 0, color: color4 },
     { x: tetrisCol / 2, y: 0, color: color4 },
@@ -45,12 +46,12 @@ const allTetrisShape = [
     { x: tetrisCol / 2, y: 3, color: color5 }],
     //方形
     [{ x: tetrisCol / 2, y: 0, color: color6 },
-    { x: tetrisCol / 2 + 1, y: 0, color: color6 },
     { x: tetrisCol / 2, y: 1, color: color6 },
+    { x: tetrisCol / 2 + 1, y: 0, color: color6 },
     { x: tetrisCol / 2 + 1, y: 1, color: color6 },],
     //土型
-    [{ x: tetrisCol / 2, y: 0, color: color7 },
-    { x: tetrisCol / 2 - 1, y: 1, color: color7 },
+    [{ x: tetrisCol / 2 - 1, y: 1, color: color7 },
+    { x: tetrisCol / 2, y: 0, color: color7 },
     { x: tetrisCol / 2, y: 1, color: color7 },
     { x: tetrisCol / 2 + 1, y: 1, color: color7 }]
 ]
@@ -114,30 +115,90 @@ export class Tetris {
         ];
     }
 
+    removeFixTetrisRow(row?: number) {
+        //let removeCount: number = 0;
+        let rows = [];
+        if (row == null) {
+            //自动检查所有行，并删除后下移
+            for (let row = 0; row < tetrisRow; row++) {
+                let canRemove: boolean = true;
+                for (let col = 0; col < tetrisCol; col++) {
+                    if (this.tetrisFixedBlockStatus[row][col] == NoBlock) {
+                        canRemove = false;
+                        break;
+                    }
+                }
+                if (canRemove) {
+                    rows.push(row);
+                }
+            }
+        }
+        else {
+            rows.push(row);
+        }
+
+        //removeCount = rows.length;
+        rows.forEach(t => {
+            for (let index = t; index >= 0; index--) {
+                let tmp = [];
+                if (index - 1 >= 0) {
+                    $.extend(true, tmp, this.tetrisFixedBlockStatus[index - 1]);
+                    this.tetrisFixedBlockStatus[index] = tmp;
+                }
+                else{
+                    for (let col = 0; col < tetrisCol; col++) {
+                        this.tetrisFixedBlockStatus[index][col] = NoBlock;
+                    }
+                }
+            }
+        })
+    }
+
     canFallenTetrisChangeDirection(): boolean {
-        //顺时针变换
-        let tmpFallBlock = this.currentFallBlock.concat();
+        //逆时针变换
+        //let tmpFallBlock = this.currentFallBlock.concat();
+        let tmpFallBlock = this.currentFallBlock.map((value: any, index: number, array: any[]) => {
+            //console.log(value);      
+            let tmp = <{ x: number, y: number, color: string }>value;
+            //console.log(tmp);
+            let res: { x: number, y: number, color: string } = { x: 0, y: 0, color: "" };
+            // res.x = tmp.x;
+            // res.y = tmp.y;
+            // res.color = tmp.color;
+            $.extend(true, res, tmp);
+            return res;
+        })
 
         this.changeFallenTetrisDirection();
 
         let findBlock = this.currentFallBlock.find(t => {
             let block = <{ x: number, y: number, color: string }>t;
+            if (block.x < 0 || block.y < 0) {
+                return true;
+            }
             if (this.tetrisFixedBlockStatus[block.y][block.x] != NoBlock) {
                 return true;
             }
 
             return false;
         });
-        if (findBlock != null) {
-            this.currentFallBlock = tmpFallBlock;
 
+        this.currentFallBlock = tmpFallBlock;
+        if (findBlock != null) {
             return false;
         }
         return true;
     }
 
     changeFallenTetrisDirection() {
-
+        for (let index = 0; index < this.currentFallBlock.length; index++) {
+            let preX = this.currentFallBlock[index].x;
+            let preY = this.currentFallBlock[index].y;
+            if (index != 2) {
+                this.currentFallBlock[index].x = this.currentFallBlock[2].x + preY - this.currentFallBlock[2].y;
+                this.currentFallBlock[index].y = this.currentFallBlock[2].y + this.currentFallBlock[2].x - preX;
+            }
+        }
     }
 
     //获取所有固定的格子
