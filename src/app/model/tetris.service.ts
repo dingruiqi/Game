@@ -21,6 +21,10 @@ export class TetrisService {
     return size;
   }
 
+  recordMaxScore(score?: number) {
+    this.tetris.recordMaxScore(score);
+  }
+
   removeFixTetrisRow(row?: number) {
     return this.tetris.removeFixTetrisRow(row);
   }

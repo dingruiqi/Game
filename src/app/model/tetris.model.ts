@@ -113,10 +113,23 @@ export class Tetris {
             { x: allTetrisShape[rand][2].x, y: allTetrisShape[rand][2].y, color: allTetrisShape[rand][2].color },
             { x: allTetrisShape[rand][3].x, y: allTetrisShape[rand][3].y, color: allTetrisShape[rand][3].color }
         ];
+
+        //判断是否和固定块重合，重合说明已经游戏失败了
+        let success = true;
+        for (let index = 0; index < this.currentFallBlock.length; index++) {
+            let block = <{ x: number, y: number, color: string }>this.currentFallBlock[index];
+            if (this.tetrisFixedBlockStatus[block.y][block.x] != NoBlock) {
+                success = false;
+                break;
+            }
+        }
+        if (!success) {
+            this.currentFallBlock = [];
+        }
     }
 
     removeFixTetrisRow(row?: number) {
-        //let removeCount: number = 0;
+        let removeCount: number = 0;
         let rows = [];
         if (row == null) {
             //自动检查所有行，并删除后下移
@@ -137,7 +150,7 @@ export class Tetris {
             rows.push(row);
         }
 
-        //removeCount = rows.length;
+        removeCount = rows.length;
         rows.forEach(t => {
             for (let index = t; index >= 0; index--) {
                 let tmp = [];
@@ -145,13 +158,32 @@ export class Tetris {
                     $.extend(true, tmp, this.tetrisFixedBlockStatus[index - 1]);
                     this.tetrisFixedBlockStatus[index] = tmp;
                 }
-                else{
+                else {
                     for (let col = 0; col < tetrisCol; col++) {
                         this.tetrisFixedBlockStatus[index][col] = NoBlock;
                     }
                 }
             }
         })
+
+        //计算分数
+        this.caculateScore(removeCount);
+    }
+
+    recordMaxScore(score?: number) {
+        if (score == null) {
+            score = this.currentScore;
+        }
+        if (score > this.maxScore) {
+            this.maxScore = score;
+        }
+
+
+    }
+
+    caculateScore(rowRemoveCount: number) {
+        //等差求和，每行最低10分，多一行多10分，第一行10分，第二行20分
+        this.currentScore += 10 * rowRemoveCount + rowRemoveCount * (rowRemoveCount - 1) / 2 * 10;
     }
 
     canFallenTetrisChangeDirection(): boolean {

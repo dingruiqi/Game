@@ -101,10 +101,14 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     this.moveFallenTetrisDown();
   }
 
-  private generateFallenTetris() {
+  private generateFallenTetris(): boolean {
     let tetrisContain = <HTMLCanvasElement>document.getElementById("tetrisCanvas");
 
     let fallenTetris = this.tetrisService.initFallenTetris();
+
+    if (fallenTetris.length != 4) {
+      return false;
+    }
 
     let rowCount = this.tetrisService.tetrisRowCount;
     let colCount = this.tetrisService.tetrisColCount;
@@ -118,6 +122,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
       let y = fallenTetris[index].y * cellWidth;
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
+
+    return true;
   }
 
   //后台线程，不停的检查当前的方块情况，如果
@@ -132,7 +138,10 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     else {
       this.drawFixTetris();
 
-      this.generateFallenTetris();
+      if (!this.generateFallenTetris()){
+        console.log('游戏因失败而结束');
+        this.stopGame();
+      }
       //this.tetrisService.initFallenTetris();
     }
   }
@@ -382,6 +391,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   stopGame() {
     console.log(`${new Date()}:结束游戏`);
+
+    this.tetrisService.recordMaxScore();
 
     // let speed = document.getElementById('currentSpeed');
     // speed.removeAttribute('disabled');
