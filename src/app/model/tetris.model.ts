@@ -183,7 +183,8 @@ export class Tetris {
 
     caculateScore(rowRemoveCount: number) {
         //等差求和，每行最低10分，多一行多10分，第一行10分，第二行20分
-        this.currentScore += 10 * rowRemoveCount + rowRemoveCount * (rowRemoveCount - 1) / 2 * 10;
+        let base = (this.currentSpeed + 1) * 10;
+        this.currentScore += base * rowRemoveCount + rowRemoveCount * (rowRemoveCount - 1) / 2 * base;
     }
 
     canFallenTetrisChangeDirection(): boolean {

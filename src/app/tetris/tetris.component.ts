@@ -34,12 +34,13 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     //绘制横向网格对应的路径
     for (let index = 1; index < rowCount; index++) {
       tetrisCtx.moveTo(0, index * cellWidth);
-      tetrisCtx.lineTo(colCount * cellWidth, index * cellWidth);
+      //tetrisCtx.lineTo(colCount * cellWidth, index * cellWidth);
+      tetrisCtx.lineTo(tetrisContain.width, Math.floor(index * cellWidth));
     }
     //绘制纵向网格对应的路径
     for (let index = 1; index < colCount; index++) {
       tetrisCtx.moveTo(index * cellWidth, 0);
-      tetrisCtx.lineTo(index * cellWidth, rowCount * cellWidth);
+      tetrisCtx.lineTo(Math.floor(index * cellWidth), tetrisContain.height);
     }
 
     tetrisCtx.closePath();
@@ -118,8 +119,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     for (let index = 0; index < fallenTetris.length; index++) {
       tetrisCtx.fillStyle = fallenTetris[index].color;
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
 
@@ -138,12 +139,17 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     else {
       this.drawFixTetris();
 
-      if (!this.generateFallenTetris()){
+      if (!this.generateFallenTetris()) {
         console.log('游戏因失败而结束');
+        this.drawGameOver();
         this.stopGame();
       }
       //this.tetrisService.initFallenTetris();
     }
+  }
+
+  private drawGameOver() {
+
   }
 
   ngOnInit() {
@@ -193,15 +199,15 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     //将原来位置的置白
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillStyle = 'white';
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
 
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = (++fallenTetris[index].y) * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor((++fallenTetris[index].y) * cellWidth);
 
       tetrisCtx.fillStyle = fallenTetris[index].color;
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
@@ -242,15 +248,15 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     //将原来位置的置白
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillStyle = 'white';
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
 
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = (++fallenTetris[index].x) * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor((++fallenTetris[index].x) * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
 
       tetrisCtx.fillStyle = fallenTetris[index].color;
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
@@ -292,17 +298,17 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     //将原来位置的置白
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillStyle = 'white';
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
 
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = (--fallenTetris[index].x) * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor((--fallenTetris[index].x) * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
 
-      x = fallenTetris[index].x * cellWidth;
+      //x = Math.floor(fallenTetris[index].x * cellWidth);
       tetrisCtx.fillStyle = fallenTetris[index].color;
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
@@ -327,8 +333,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     //将原来位置的置白
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillStyle = 'white';
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
@@ -338,8 +344,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     fallenTetris = this.tetrisService.getFallenTetris();
 
     for (let index = 0; index < fallenTetris.length; index++) {
-      let x = fallenTetris[index].x * cellWidth;
-      let y = fallenTetris[index].y * cellWidth;
+      let x = Math.floor(fallenTetris[index].x * cellWidth);
+      let y = Math.floor(fallenTetris[index].y * cellWidth);
       tetrisCtx.fillStyle = fallenTetris[index].color;
       tetrisCtx.fillRect(x + 1, y + 1, cellWidth - 2, cellWidth - 2);
     }
@@ -389,6 +395,20 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     this.initTetrisCanvas();
   }
 
+  private playMusic(playFlag: boolean) {
+    let music = <HTMLAudioElement>$('#music')[0];
+    //music.src = 'assets/tetris/tetris.ogg';
+    //music.loop = true;
+
+    if (playFlag) {
+      music.currentTime = 0;
+      music.play();
+    }
+    else {
+      music.pause();
+    }
+  }
+
   stopGame() {
     console.log(`${new Date()}:结束游戏`);
 
@@ -399,6 +419,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     $('#currentSpeed').removeAttr('disabled');
 
     this.isPlaying = false;
+    this.playMusic(false);
+
     if (this.tetrisDrawTimer != null) {
       window.clearInterval(this.tetrisDrawTimer);
     }
@@ -413,12 +435,17 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
     this.isPlaying = true;
 
+    this.playMusic(true);
+
     if (this.tetrisDrawTimer != null) {
       window.clearInterval(this.tetrisDrawTimer);
     }
 
+    this.drawTetris();
+
+    let interval = 1000 - this.tetrisService.tetrisCurrentSpeed * 200 - 100;
     this.tetrisDrawTimer = window.setInterval(() => {
       this.drawTetris();
-    }, 1000);
+    }, interval);
   }
 }
