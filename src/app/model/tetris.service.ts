@@ -65,6 +65,13 @@ export class TetrisService {
     return this.tetris.getFallTetris();
   }
 
+  initTetris() {
+    this.tetris.clearFallTetris();
+    this.tetris.clearFixTetris();
+    this.tetris.currentScore = 0;
+    this.tetris.currentSpeed = 0;
+  }
+
   get hasFallenTetris(): boolean {
     return this.tetris.hasFallenTetris;
   }

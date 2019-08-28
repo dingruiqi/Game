@@ -94,6 +94,19 @@ export class Tetris {
         this.currentFallBlock = [];
     }
 
+    clearFallTetris(){
+        this.currentFallBlock=[];
+    }
+
+    clearFixTetris(){
+        for (let row = 0; row < tetrisRow; row++) {
+            this.tetrisFixedBlockStatus[row] = [];
+            for (let col = 0; col < tetrisCol; col++) {
+                this.tetrisFixedBlockStatus[row][col] = NoBlock;
+            }
+        }
+    }
+
     getFallTetris(): [{ x: number, y: number, color: string },
         { x: number, y: number, color: string },
         { x: number, y: number, color: string },

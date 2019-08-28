@@ -432,6 +432,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     //let speed = document.getElementById('currentSpeed');
     //speed.setAttribute('disabled','true');
     $('#currentSpeed').attr('disabled', 'true');
+    this.tetrisService.initTetris();
 
     this.isPlaying = true;
 
