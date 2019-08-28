@@ -14,6 +14,14 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   constructor(private tetrisService: TetrisService) { }
 
+  get tetrisMaxScore(): number {
+    return this.tetrisService.tetrisMaxScore;
+  }
+
+  get tetrisCurrentScore(): number {
+    return this.tetrisService.tetrisCurrentScore;
+  }
+
   private tetrisDrawTimer = null;
 
   private isPlaying: boolean = false;
