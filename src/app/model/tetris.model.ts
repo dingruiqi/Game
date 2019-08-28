@@ -58,7 +58,7 @@ const allTetrisShape = [
 
 export class Tetris {
 
-    //当前速度
+    //当前速度 
     public currentSpeed: number = 0;
     //当前分数
     public currentScore: number = 0;
