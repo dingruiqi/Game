@@ -14,6 +14,8 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   constructor(private tetrisService: TetrisService) { }
 
+  public gameOver: boolean = false;
+
   get tetrisMaxScore(): number {
     return this.tetrisService.tetrisMaxScore;
   }
@@ -165,7 +167,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
   }
 
   private drawGameOver() {
-
+    this.gameOver = true;
   }
 
   ngOnInit() {
@@ -427,7 +429,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   stopGame() {
     console.log(`${new Date()}:结束游戏`);
-
+    this.gameOver = true;
     this.tetrisService.recordMaxScore();
 
     // let speed = document.getElementById('currentSpeed');
@@ -451,6 +453,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     this.tetrisService.initTetris();
 
     this.isPlaying = true;
+    this.gameOver = false;
 
     this.playMusic(true);
 

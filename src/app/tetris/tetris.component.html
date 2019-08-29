@@ -4,12 +4,12 @@
             <canvas class="rounded border border-primary bg-white p-0" id="tetrisCanvas">
                 你的浏览器不支持该游戏！
             </canvas>
+            <span id="gameOver" *ngIf="gameOver">你输了！</span>
         </div>
         <div class="col-3 p-0">
             <div class="form-group">
                 <label for="maxScore" class="text-left text-primary">最高纪录:</label>
-                <label id="maxScore"
-                    class="form-control text-primary font-weight-bold">{{tetrisMaxScore}}</label>
+                <label id="maxScore" class="form-control text-primary font-weight-bold">{{tetrisMaxScore}}</label>
             </div>
             <div class="form-group">
                 <label for="currentScore" class="text-left text-primary">当前分数:</label>
