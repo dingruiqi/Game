@@ -429,7 +429,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
 
   stopGame() {
     console.log(`${new Date()}:结束游戏`);
-    this.gameOver = true;
+
     this.tetrisService.recordMaxScore();
 
     // let speed = document.getElementById('currentSpeed');

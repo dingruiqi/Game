@@ -1,3 +1,7 @@
 #tetrisCanvas{
      width: 100%
 }
+
+#gameOver{
+     position: absolute
+}
