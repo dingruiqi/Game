@@ -22,6 +22,14 @@ export class TetrisComponent implements OnInit, AfterViewInit {
     return this.tetrisService.tetrisCurrentScore;
   }
 
+  get tetrisCurrentSpeed(): number {
+    return this.tetrisService.tetrisCurrentSpeed;
+  }
+
+  set tetrisCurrentSpeed(speed: number) {
+    this.tetrisService.tetrisCurrentSpeed = speed;
+  }
+
   private tetrisDrawTimer = null;
 
   private isPlaying: boolean = false;
