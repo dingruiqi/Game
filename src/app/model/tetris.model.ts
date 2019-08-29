@@ -1,9 +1,9 @@
 import * as $ from 'jquery';
 
 //俄罗斯方块的行数
-export const tetrisRow = 24;
+export const tetrisRow = 20;
 //俄罗斯方块的列数
-export const tetrisCol = 24;
+export const tetrisCol = 18;
 
 //空颜色
 const color0 = "#FFFFFF";
