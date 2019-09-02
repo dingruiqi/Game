@@ -173,7 +173,7 @@ export class TetrisComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     fromEvent(window, 'keydown')
       .subscribe((res: KeyboardEvent) => {
-        console.log(`监听按钮：${res.keyCode}`);
+        //console.log(`监听按钮：${res.keyCode}`);
         this.processKeyDown(res.keyCode);
       });
   };
