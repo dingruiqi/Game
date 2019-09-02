@@ -3,5 +3,9 @@
 }
 
 #gameOver{
-     position: absolute
+     position: absolute;
+     left: 100px;
+     top: 150px;
+     color: maroon;
+     font-size: 100px
 }
